@@ -13,3 +13,19 @@ jobs:
     - uses: actions/checkout@v2
     - name: Checkout source and build
       run: echo Hello, world!
+      
+         run_Tests_UAT:
+    needs: run_Tests_UAT
+    name: Run_Tests_UAT
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: cerberus-action
+      uses: cerberustesting/cerberus-github-action@v6
+      with:
+        host: https://jftl.cerberus-testing.fr
+        campaign: SanityCheck
+        apikey: ${{ secrets.APIKEY }}
+        author: ${{ github.event.pusher.name }}
+        environment: UAT
+        tag: ${TAG}
